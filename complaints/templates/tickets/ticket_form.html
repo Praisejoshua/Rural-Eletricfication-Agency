@@ -1,0 +1,70 @@
+<!-- templates/tickets/ticket_form.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Ticket</title>
+    <link rel="stylesheet" href="{% static 'css/ticket_form.css' %}">
+</head>
+<body>
+    <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 80px; display: block; margin: auto; margin-bottom: 20px;">
+    <h2>Create a Complaint Ticket</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <label>Name of Complaint:</label>
+        {{ form.complaint_name }}
+
+        <label>Department/Unit/Section:</label>
+        {{ form.department }}
+
+        <label>Problem:</label>
+        {{ form.problem }}
+
+        <label>Problem Description:</label>
+        {{ form.problem_description }}
+
+        <label>Response by ICT Unit:</label>
+        {{ form.ict_response }}
+
+        <label>Complain Satisfy:</label>
+        {{ form.complain_satisfy }}
+
+        <div id="unsatisfied-reason-container" class="hidden">
+            <label>If No, Why:</label>
+            {{ form.unsatisfied_reason }}
+        </div>
+
+        <label>Signed by Staff:</label>
+        {{ form.signed_by_staff }}
+
+        <label>Signed by HOD of ICT:</label>
+        {{ form.signed_by_hod_ict }}
+
+        <label>Signed by Head of Section:</label>
+        {{ form.signed_by_head_section }}
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const satisfyField = document.getElementById("id_complain_satisfy");
+        const unsatisfiedContainer = document.getElementById("unsatisfied-reason-container");
+
+        function toggleUnsatisfiedField() {
+            if (satisfyField.value === "no") {
+                unsatisfiedContainer.classList.remove("hidden");
+            } else {
+                unsatisfiedContainer.classList.add("hidden");
+                document.getElementById("id_unsatisfied_reason").value = "";
+            }
+        }
+
+        satisfyField.addEventListener("change", toggleUnsatisfiedField);
+        window.onload = toggleUnsatisfiedField;
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!-- templates/tickets/ticket_list.html -->
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Tickets</title>
+<link rel="stylesheet" href="{% static 'css/ticket_list.css' %}">
+</head>
+<body>
+    <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 80px; display: block; margin: auto; margin-bottom: 20px;">
+    <h1>All Complaint Tickets</h1>
+
+    <a href="{% url 'ticket-create' %}" class="button">Create New Ticket</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ticket #</th>
+                <th>Complaint Name</th>
+                <th>Department</th>
+                <th>Problem</th>
+                <th>Satisfaction</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.ticket_number }}</td>
+                <td>{{ ticket.complaint_name }}</td>
+                <td>{{ ticket.department }}</td>
+                <td>{{ ticket.problem }}</td>
+                <td>{{ ticket.complain_satisfy }}</td>
+                <td><a href="{% url 'ticket-detail' ticket.pk %}">View</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No tickets submitted yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

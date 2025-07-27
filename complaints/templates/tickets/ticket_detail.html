@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Details</title>
+    <link rel="stylesheet" href="{% static 'css/ticket_detail.css' %}">
+</head>
+<body>
+    <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 80px; display: block; margin: auto; margin-bottom: 20px;">
+
+    <h1>Ticket Details</h1>
+
+    <div class="ticket-container">
+        <div class="field">
+            <span class="label">Ticket Number:</span>
+            <div class="value">{{ object.ticket_number }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">Complaint Name:</span>
+            <div class="value">{{ object.complaint_name }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">Department:</span>
+            <div class="value">{{ object.department }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">Problem:</span>
+            <div class="value">{{ object.problem }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">Problem Description:</span>
+            <div class="value">{{ object.problem_description }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">ICT Response:</span>
+            <div class="value">{{ object.ict_response|default:"No response yet." }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">Satisfied:</span>
+            <div class="value {% if object.complain_satisfy == 'yes' %}status-yes{% else %}status-no{% endif %}">
+                {{ object.complain_satisfy|title }}
+            </div>
+        </div>
+
+        {% if object.complain_satisfy == "no" %}
+        <div class="field">
+            <span class="label">Reason for Dissatisfaction:</span>
+            <div class="value">{{ object.unsatisfied_reason }}</div>
+        </div>
+        {% endif %}
+
+        <div class="field">
+            <span class="label">Signed by Staff:</span>
+            <div class="value">{{ object.signed_by_staff|yesno:"Yes,No" }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">Signed by HOD ICT:</span>
+            <div class="value">{{ object.signed_by_hod_ict|yesno:"Yes,No" }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">Signed by Head of Section:</span>
+            <div class="value">{{ object.signed_by_head_section|yesno:"Yes,No" }}</div>
+        </div>
+
+        <div class="field">
+            <span class="label">Submitted on:</span>
+            <div class="value">{{ object.created_at|date:"F j, Y, g:i a" }}</div>
+        </div>
+
+        <a href="{% url 'ticket-list' %}" class="back-link">← Back to list</a>
+        <p><a href="{% url 'ticket-download' object.pk %}" class="back-link">⬇ Download as PDF</a></p>
+
+    </div>
+</body>
+</html>
